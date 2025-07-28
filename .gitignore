@@ -1,33 +1,72 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
+# Pasta de build e compilação
+/target/
+/build/
+/out/
+
+# Arquivos de log
+*.log
+
+# Arquivos temporários e caches
+*.tmp
+*.temp
+*.swp
+*~
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Maven Wrapper
+/.mvn/wrapper/maven-wrapper.jar
+
+# Ignorar pastas target dentro de src, mas mantendo o código fonte
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Configurações e arquivos gerados por IDEs
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+## IntelliJ IDEA
+/.idea/
+/*.iml
+/*.iws
+/*.ipr
+out/
 
-### NetBeans ###
+## Spring Tool Suite (STS)
+/.apt_generated
+/.classpath
+/.factorypath
+/.project
+/.settings
+/.springBeans
+/.sts4-cache
+
+## NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+## VS Code
 .vscode/
+
+# Variáveis de ambiente e arquivos sensíveis
+.env
+.env.*
+
+# Outros arquivos desnecessários
+*.class
+*.jar
+*.war
+*.ear
+
+# Arquivos de backup comuns
+*~
+*.bak
+*.orig
+
+# Logs do sistema e debugging
+hs_err_pid*
+java_pid*
+
