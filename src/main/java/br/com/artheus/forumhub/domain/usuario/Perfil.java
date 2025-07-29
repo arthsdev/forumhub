@@ -3,6 +3,7 @@ package br.com.artheus.forumhub.domain.usuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -16,7 +17,7 @@ import java.util.Set;
 @Table(name = "perfis")
 @EqualsAndHashCode(of = "id")
 @ToString(exclude = "usuarios")
-public class Perfil implements Serializable {
+public class Perfil implements Serializable, GrantedAuthority {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,4 +31,9 @@ public class Perfil implements Serializable {
 
     @ManyToMany(mappedBy = "perfis")
     private Set<Usuario> usuarios = new HashSet<>();
+
+    @Override
+    public String getAuthority() {
+        return nome;
+    }
 }

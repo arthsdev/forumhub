@@ -5,6 +5,7 @@ import br.com.artheus.forumhub.dto.usuario.CadastroUsuario;
 import br.com.artheus.forumhub.dto.usuario.DetalhamentoUsuario;
 import br.com.artheus.forumhub.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +18,16 @@ import java.util.stream.Collectors;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;  // INJEÇÃO DO PASSWORD ENCODER
 
     public DetalhamentoUsuario criarUsuario(CadastroUsuario dados){
-        Usuario usuario = usuarioRepository.save(dados.toEntity());
+        Usuario usuario = dados.toEntity();
+
+        // Criptografa a senha antes de salvar
+        String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
+        usuario.setSenha(senhaCriptografada);
+
+        usuario = usuarioRepository.save(usuario);
         return DetalhamentoUsuario.fromEntity(usuario);
     }
 
@@ -28,7 +36,6 @@ public class UsuarioService {
                 .map(DetalhamentoUsuario::fromEntity)
                 .collect(Collectors.toList());
     }
-
 
     public Usuario buscarPorId(Long id){
         return usuarioRepository.findById(id)

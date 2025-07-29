@@ -1,11 +1,11 @@
 package br.com.artheus.forumhub.domain.usuario;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,10 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@ToString(exclude = "perfis")
-public class Usuario implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,16 +25,12 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     private boolean ativo = true;
 
-    @NotBlank(message = "Nome não pode estar em branco!")
     @Column(nullable = false, length = 100)
     private String nome;
 
-    @Email(message = "E-mail inválido")
-    @NotBlank(message = "Campo email não pode estar em branco!")
     @Column(unique = true, nullable = false, length = 150)
     private String email;
 
-    @NotBlank(message = "Senha não pode estar em branco")
     @Column(nullable = false)
     private String senha;
 
@@ -49,13 +42,46 @@ public class Usuario implements Serializable {
     )
     private Set<Perfil> perfis = new HashSet<>();
 
-    public void adicionarPerfil(Perfil perfil) {
-        this.perfis.add(perfil);
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return perfis;
+    }
+
+    @Override
+    public String getPassword() {
+        return senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return ativo;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return ativo;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return ativo;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return ativo;
     }
 
     public Usuario(String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.ativo = true;
+        this.perfis = new HashSet<>();
     }
 }
