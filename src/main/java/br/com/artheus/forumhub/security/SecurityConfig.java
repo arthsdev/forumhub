@@ -1,7 +1,5 @@
-package br.com.artheus.forumhub.config;
+package br.com.artheus.forumhub.security;
 
-import br.com.artheus.forumhub.security.JwtAuthenticationFilter;
-import br.com.artheus.forumhub.security.JwtService;
 import br.com.artheus.forumhub.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -34,9 +32,17 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/usuarios").permitAll() // libera só POST /usuarios
-                        .requestMatchers("/auth/**").permitAll() // libera login
-                        .anyRequest().authenticated() // os demais protegidos
+                        .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
+                        .requestMatchers("/auth/**").permitAll()
+
+                        .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -59,7 +65,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // Para permitir injection de AuthenticationManager no Controller ou Service
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
