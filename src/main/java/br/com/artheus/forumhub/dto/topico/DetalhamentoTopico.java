@@ -43,4 +43,6 @@ public record DetalhamentoTopico(
                 CursoDetalhamento.fromEntity(topico.getCurso())
         );
     }
+
+
 }

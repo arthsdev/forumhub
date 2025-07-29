@@ -1,5 +1,6 @@
 package br.com.artheus.forumhub.controller;
 
+import br.com.artheus.forumhub.dto.topico.AtualizacaoParcialTopico;
 import br.com.artheus.forumhub.dto.topico.AtualizacaoTopico;
 import br.com.artheus.forumhub.dto.topico.CadastroTopico;
 import br.com.artheus.forumhub.dto.topico.DetalhamentoTopico;
@@ -7,6 +8,7 @@ import br.com.artheus.forumhub.service.TopicoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -60,5 +62,12 @@ public class TopicoController {
     public ResponseEntity<Void> deletarTopico(@PathVariable Long id){
         topicoService.deletarTopico(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<DetalhamentoTopico> atualizarParcial(@PathVariable Long id,
+                                                               @RequestBody AtualizacaoParcialTopico dados) {
+        var topicoAtualizado = topicoService.atualizarParcial(id, dados);
+        return ResponseEntity.ok(topicoAtualizado);
     }
 }

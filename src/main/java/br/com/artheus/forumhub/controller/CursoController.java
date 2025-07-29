@@ -42,4 +42,10 @@ public class CursoController {
         var curso = cursoService.buscarPorId(id);
         return ResponseEntity.ok(DetalhamentoCurso.fromEntity(curso));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarCurso(@PathVariable Long id) {
+        cursoService.deletarCurso(id);
+        return ResponseEntity.noContent().build();
+    }
 }

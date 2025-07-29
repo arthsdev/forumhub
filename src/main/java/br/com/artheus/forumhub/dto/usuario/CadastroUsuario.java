@@ -15,7 +15,7 @@ public record CadastroUsuario(
         @Email(message = "Email inválido")
         String email,
 
-        @NotBlank(message = "Nome não pode estar em branco!")
+        @NotBlank(message = "Senha não pode estar em branco!")
         @Size(min = 6, max = 20)
         String senha
 ) {

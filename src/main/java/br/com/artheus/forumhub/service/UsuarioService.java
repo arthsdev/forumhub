@@ -34,4 +34,12 @@ public class UsuarioService {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario não encontrado!"));
     }
+
+    @Transactional
+    public void inativarUsuario(Long id) {
+        var usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+        usuario.setAtivo(false);
+        usuarioRepository.save(usuario);
+    }
 }

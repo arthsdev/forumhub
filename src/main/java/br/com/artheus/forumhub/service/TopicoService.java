@@ -1,6 +1,8 @@
 package br.com.artheus.forumhub.service;
 
+import br.com.artheus.forumhub.domain.topico.StatusTopico;
 import br.com.artheus.forumhub.domain.topico.Topico;
+import br.com.artheus.forumhub.dto.topico.AtualizacaoParcialTopico;
 import br.com.artheus.forumhub.dto.topico.AtualizacaoTopico;
 import br.com.artheus.forumhub.dto.topico.CadastroTopico;
 import br.com.artheus.forumhub.dto.topico.DetalhamentoTopico;
@@ -30,6 +32,7 @@ public class TopicoService {
                 .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado!"));
 
         Topico topico = dados.toEntity(autor, curso);
+        topico.setStatus(StatusTopico.NAO_RESPONDIDO);
         topico = topicoRepository.save(topico);
         return DetalhamentoTopico.fromEntity(topico);
     }
@@ -70,5 +73,20 @@ public class TopicoService {
             throw new IllegalArgumentException("Tópico não encontrado");
         }
         topicoRepository.deleteById(id);
+    }
+
+    @Transactional
+    public DetalhamentoTopico atualizarParcial(Long id, AtualizacaoParcialTopico dados) {
+        var topico = topicoRepository.getReferenceById(id);
+
+        if (dados.titulo() != null && !dados.titulo().isBlank()) {
+            topico.setTitulo(dados.titulo());
+        }
+
+        if (dados.mensagem() != null && !dados.mensagem().isBlank()) {
+            topico.setMensagem(dados.mensagem());
+        }
+
+        return DetalhamentoTopico.fromEntity(topico);
     }
 }

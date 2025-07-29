@@ -46,4 +46,10 @@ public class UsuarioController {
         var usuario = usuarioService.buscarPorId(id);
         return ResponseEntity.ok(DetalhamentoUsuario.fromEntity(usuario));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> inativarUsuario(@PathVariable Long id) {
+        usuarioService.inativarUsuario(id);
+        return ResponseEntity.noContent().build();
+    }
 }
