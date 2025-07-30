@@ -23,7 +23,6 @@ public class UsuarioService {
     public DetalhamentoUsuario criarUsuario(CadastroUsuario dados){
         Usuario usuario = dados.toEntity();
 
-        // Criptografa a senha antes de salvar
         String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
         usuario.setSenha(senhaCriptografada);
 
