@@ -27,7 +27,7 @@ br.com.artheus.forumhub
 ├── dto             # Data Transfer Objects
 ├── repository      # Interfaces para acesso ao banco
 ├── service         # Regras de negócio
-├── infra.security  # Segurança, JWT e autenticação
+├── security  # Segurança, JWT e autenticação
 ```
 
 ---
