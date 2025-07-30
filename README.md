@@ -1,5 +1,11 @@
 # 🧵 ForumHub API
 
+![Java](https://img.shields.io/badge/Java-17-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0-brightgreen)
+![MySQL](https://img.shields.io/badge/MySQL-005C84?logo=mysql&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
+
 Uma API REST para um fórum de perguntas e respostas, inspirada no modelo do Alura Fórum. Desenvolvida com Spring Boot e boas práticas modernas de segurança, autenticação, DTOs e arquitetura em camadas.
 
 ---
@@ -18,6 +24,20 @@ Uma API REST para um fórum de perguntas e respostas, inspirada no modelo do Alu
 
 ---
 
+## 🧰 Tecnologias utilizadas
+
+- Java 17  
+- Spring Boot 3  
+- Spring Security  
+- JWT (Json Web Token)  
+- MySQL  
+- Flyway  
+- Maven  
+- Swagger UI  
+- Jakarta Bean Validation  
+- BCrypt  
+
+
 ## 📂 Estrutura do projeto
 
 ```
@@ -27,7 +47,7 @@ br.com.artheus.forumhub
 ├── dto             # Data Transfer Objects
 ├── repository      # Interfaces para acesso ao banco
 ├── service         # Regras de negócio
-├── security  # Segurança, JWT e autenticação
+├── security        # Segurança, JWT e autenticação
 ```
 
 ---
@@ -77,12 +97,12 @@ git clone https://github.com/arthsdev/forumhub.git
 cd forumhub
 ```
 
-### 2. Configure o banco de dados PostgreSQL
+### 2. Configure o banco de dados MySQL
 
 Crie um banco chamado `forumhub` e edite o arquivo `src/main/resources/application.properties`:
 
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/forumhub
+spring.datasource.url=jdbc:mysql://localhost:3306/forumhub
 spring.datasource.username=seu_usuario
 spring.datasource.password=sua_senha
 ```
