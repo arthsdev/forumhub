@@ -5,22 +5,21 @@
 ![MySQL](https://img.shields.io/badge/MySQL-005C84?logo=mysql&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-
 Uma API REST para um fórum de perguntas e respostas, inspirada no modelo do Alura Fórum. Desenvolvida com Spring Boot e boas práticas modernas de segurança, autenticação, DTOs e arquitetura em camadas.
 
 ---
 
 ## 🚀 Funcionalidades
 
-- Autenticação com JWT
-- Cadastro e login de usuários
-- CRUD de tópicos
-- Associação com cursos
-- Validações com Bean Validation
-- Documentação com Swagger UI
-- Migrations com Flyway
-- Hash de senha com BCrypt
-- Paginação, ordenação e filtros
+- Autenticação com JWT  
+- Cadastro e login de usuários  
+- CRUD de tópicos  
+- Associação com cursos  
+- Validações com Bean Validation  
+- Documentação com Swagger UI  
+- Migrations com Flyway  
+- Hash de senha com BCrypt  
+- Paginação, ordenação e filtros  
 
 ---
 
@@ -37,6 +36,7 @@ Uma API REST para um fórum de perguntas e respostas, inspirada no modelo do Alu
 - Jakarta Bean Validation  
 - BCrypt  
 
+---
 
 ## 📂 Estrutura do projeto
 
@@ -54,12 +54,15 @@ br.com.artheus.forumhub
 
 ## 🔐 Autenticação
 
-O login é feito via:
-
+### Login
+**Endpoint:**
 ```
 POST /auth/login
 Content-Type: application/json
+```
 
+**Exemplo de corpo da requisição:**
+```json
 {
   "login": "usuario",
   "senha": "123456"
@@ -74,6 +77,7 @@ Content-Type: application/json
 ```
 
 Use o token nas próximas requisições:
+
 ```
 Authorization: Bearer SEU_TOKEN_AQUI
 ```
@@ -90,6 +94,35 @@ Acesse a documentação interativa via Swagger:
 
 ## 🛠️ Rodando o projeto localmente
 
+### 🔐 1. Configuração das variáveis de ambiente
+
+Configure as variáveis diretamente no IntelliJ:
+
+1. Vá em **Run > Edit Configurations...**  
+2. Selecione a configuração da sua aplicação (`ForumHubApplication`)  
+3. No campo **Environment variables**, adicione:
+
+```
+DB_URL=jdbc:mysql://localhost:3306/forumhub;DB_USERNAME=seu_usuario;DB_PASSWORD=sua_senha;JWT_SECRET_KEY=sua_chave_secreta_segura
+```
+
+> Use `;` como separador se estiver no Windows, ou `:` no macOS/Linux.
+
+### 📄 2. application.properties
+
+No seu `src/main/resources/application.properties`, use:
+
+```properties
+spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
+jwt.secret=${JWT_SECRET_KEY}
+```
+
+---
+
+## ✅ Etapas para rodar
+
 ### 1. Clone o repositório:
 
 ```bash
@@ -99,37 +132,26 @@ cd forumhub
 
 ### 2. Configure o banco de dados MySQL
 
-Crie um banco chamado `forumhub` e edite o arquivo `src/main/resources/application.properties`:
-
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/forumhub
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
-```
+Crie um banco chamado `forumhub`.
 
 ### 3. Rode o projeto
-
-Via terminal:
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-Ou rode a classe `ForumHubApplication` na sua IDE.
+Ou execute a classe `ForumHubApplication` pela sua IDE.
 
 ### 4. Acesse a API
 
-Abra o navegador:
-
-```
-http://localhost:8080
-```
+Abra no navegador:  
+🔗 [http://localhost:8080](http://localhost:8080)
 
 ---
 
 ## 📦 Migrations com Flyway
 
-As tabelas são criadas automaticamente via scripts Flyway localizados em:
+As tabelas são criadas automaticamente via scripts Flyway, localizados em:
 
 ```
 src/main/resources/db/migration
