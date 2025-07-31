@@ -1,176 +1,101 @@
+
 # 🧵 ForumHub API
 
 ![Java](https://img.shields.io/badge/Java-17-blue)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0-brightgreen)
-![MySQL](https://img.shields.io/badge/MySQL-005C84?logo=mysql&logoColor=white)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2.x-brightgreen)
+![License](https://img.shields.io/github/license/arthsdev/forumhub)
+![Tests](https://img.shields.io/badge/testes-unitários%20%7C%20integração%20%7C%20E2E-success)
 
-Uma API REST para um fórum de perguntas e respostas, inspirada no modelo do Alura Fórum. Desenvolvida com Spring Boot e boas práticas modernas de segurança, autenticação, DTOs e arquitetura em camadas.
-
----
-
-## 🚀 Funcionalidades
-
-- Autenticação com JWT  
-- Cadastro e login de usuários  
-- CRUD de tópicos  
-- Associação com cursos  
-- Validações com Bean Validation  
-- Documentação com Swagger UI  
-- Migrations com Flyway  
-- Hash de senha com BCrypt  
-- Paginação, ordenação e filtros  
+ForumHub é uma API REST para um fórum de perguntas e respostas, inspirada no modelo da Alura. Foi construída com foco em boas práticas, segurança com JWT e cobertura de testes. Ideal para aprendizado e também para demonstrar habilidades em backend Java.
 
 ---
 
-## 🧰 Tecnologias utilizadas
+## 🚀 Tecnologias utilizadas
 
 - Java 17  
 - Spring Boot 3  
-- Spring Security  
-- JWT (Json Web Token)  
-- MySQL  
+- Spring Security + JWT  
+- Spring Data JPA  
 - Flyway  
-- Maven  
-- Swagger UI  
-- Jakarta Bean Validation  
-- BCrypt  
+- MySQL / H2  
+- JUnit 5, Mockito, Testcontainers  
+- Swagger / OpenAPI
 
 ---
 
-## 📂 Estrutura do projeto
+## 📚 Funcionalidades
 
-```
-br.com.artheus.forumhub
-├── controller      # Endpoints da API (REST Controllers)
-├── domain          # Entidades (JPA)
-├── dto             # Data Transfer Objects
-├── repository      # Interfaces para acesso ao banco
-├── service         # Regras de negócio
-├── security        # Segurança, JWT e autenticação
-```
+- ✅ Cadastro e autenticação de usuários com JWT
+- ✅ Criação, listagem, detalhamento e remoção de tópicos
+- ✅ Associação de tópicos a cursos e categorias
+- ✅ Busca de cursos por nome
+- ✅ Endpoints protegidos
+- ✅ Validações com Bean Validation
+- ✅ Paginação e ordenação
+- ✅ Testes unitários, integração e ponta-a-ponta (E2E)
+
+---
+
+## 🛠️ Como rodar localmente
+
+1. Clone o projeto:
+   ```bash
+   git clone https://github.com/arthsdev/forumhub.git
+   cd forumhub
+   ```
+
+2. Configure as variáveis de ambiente:
+   - `DB_URL=jdbc:mysql://localhost:3306/forumhub`
+   - `DB_USERNAME=root`
+   - `DB_PASSWORD=sua_senha`
+   - `JWT_SECRET_KEY=uma_chave_secreta_segura`
+
+   Você pode configurar isso nas Run Configurations da sua IDE.
+
+3. Rode o projeto:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+4. Acesse a documentação Swagger:
+   ```
+   http://localhost:8080/swagger-ui/index.html
+   ```
 
 ---
 
 ## 🔐 Autenticação
 
-### Login
-**Endpoint:**
-```
-POST /auth/login
-Content-Type: application/json
-```
-
-**Exemplo de corpo da requisição:**
-```json
-{
-  "login": "usuario",
-  "senha": "123456"
-}
-```
-
-**Resposta:**
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-}
-```
-
-Use o token nas próximas requisições:
-
-```
-Authorization: Bearer SEU_TOKEN_AQUI
-```
+Faça login no endpoint `/auth/login` com um usuário existente para obter o token JWT. Use o token no header `Authorization: Bearer SEU_TOKEN` para acessar os endpoints protegidos.
 
 ---
 
-## 📖 Documentação da API
+## 🧪 Como rodar os testes
 
-Acesse a documentação interativa via Swagger:
+O projeto possui testes de:
 
-🔗 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+- ✅ Unidade (`@Mock`, `@InjectMocks`)
+- ✅ Integração (`@SpringBootTest`)
+- ✅ Ponta a ponta (E2E) com autenticação real
 
----
-
-## 🛠️ Rodando o projeto localmente
-
-### 🔐 1. Configuração das variáveis de ambiente
-
-Configure as variáveis diretamente no IntelliJ:
-
-1. Vá em **Run > Edit Configurations...**  
-2. Selecione a configuração da sua aplicação (`ForumHubApplication`)  
-3. No campo **Environment variables**, adicione:
-
-```
-DB_URL=jdbc:mysql://localhost:3306/forumhub;DB_USERNAME=seu_usuario;DB_PASSWORD=sua_senha;JWT_SECRET_KEY=sua_chave_secreta_segura
-```
-
-> Use `;` como separador se estiver no Windows, ou `:` no macOS/Linux.
-
-### 📄 2. application.properties
-
-No seu `src/main/resources/application.properties`, use:
-
-```properties
-spring.datasource.url=${DB_URL}
-spring.datasource.username=${DB_USERNAME}
-spring.datasource.password=${DB_PASSWORD}
-jwt.secret=${JWT_SECRET_KEY}
-```
-
----
-
-## ✅ Etapas para rodar
-
-### 1. Clone o repositório:
+Para executar todos os testes via Maven:
 
 ```bash
-git clone https://github.com/arthsdev/forumhub.git
-cd forumhub
+./mvnw test
 ```
-
-### 2. Configure o banco de dados MySQL
-
-Crie um banco chamado `forumhub`.
-
-### 3. Rode o projeto
-
-```bash
-./mvnw spring-boot:run
-```
-
-Ou execute a classe `ForumHubApplication` pela sua IDE.
-
-### 4. Acesse a API
-
-Abra no navegador:  
-🔗 [http://localhost:8080](http://localhost:8080)
-
----
-
-## 📦 Migrations com Flyway
-
-As tabelas são criadas automaticamente via scripts Flyway, localizados em:
-
-```
-src/main/resources/db/migration
-```
-
----
-
-## ✅ Status do projeto
-
-🚧 Em desenvolvimento com foco em boas práticas de arquitetura, segurança e aprendizado com Spring Boot.
 
 ---
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para detalhes.
 
 ---
 
-## 👨‍💻 Autor
+## 🤝 Contato
 
-Desenvolvido por [Artheus Dev](https://github.com/arthsdev)
+Desenvolvido por Fabiano. Para dúvidas ou sugestões, abra uma issue no GitHub ou entre em contato.
+
+---
+
+Obrigado por visitar o ForumHub!
