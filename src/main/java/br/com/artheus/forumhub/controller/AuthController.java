@@ -1,6 +1,8 @@
 package br.com.artheus.forumhub.controller;
 
 import br.com.artheus.forumhub.domain.usuario.Usuario;
+import br.com.artheus.forumhub.dto.auth.AuthRequest;
+import br.com.artheus.forumhub.dto.auth.TokenResponse;
 import br.com.artheus.forumhub.security.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -51,18 +53,4 @@ public class AuthController {
         return ResponseEntity.ok(new TokenResponse(token));
     }
 
-    @Data
-    public static class AuthRequest {
-        @Schema(description = "E-mail do usuário", example = "usuario@email.com")
-        private String email;
-
-        @Schema(description = "Senha do usuário", example = "senha123")
-        private String senha;
-    }
-
-    @Data
-    public static class TokenResponse {
-        @Schema(description = "Token JWT gerado para autenticação", example = "eyJhbGciOiJIUzI1...")
-        private final String token;
-    }
 }

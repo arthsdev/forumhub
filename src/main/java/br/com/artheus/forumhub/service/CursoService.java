@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-
 public class CursoService {
 
     private final CursoRepository cursoRepository;
@@ -40,7 +39,7 @@ public class CursoService {
 
     public Curso buscarPorId(Long id){
         return cursoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado!"));
+                .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado"));
     }
 
     @Transactional
@@ -56,6 +55,4 @@ public class CursoService {
 
         cursoRepository.deleteById(id);
     }
-
-
 }
